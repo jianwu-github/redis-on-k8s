@@ -1,0 +1,43 @@
+kind: Deployment
+apiVersion: extensions/v1beta1
+metadata:
+  name: redis-deployment
+  namespace: opencv-cluster-1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: redis-server
+  template:
+    metadata:
+      labels:
+        component: redis-server
+    spec:
+      containers:
+      - name: redis-server
+        image: redis
+        ports:
+        - containerPort: 6379
+        resources:
+          requests:
+            cpu: 100m
+            memory: 100Mi
+      nodeSelector:
+        redis-server: server1
+
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: redis-service
+  namespace: opencv-cluster-1
+spec:
+  selector:
+    component: redis-server
+  ports:
+  - name: redis-server-port
+    port: 6379
+    targetPort: 6379
+    nodePort: 32379
+  type: NodePort
