@@ -1,0 +1,39 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: opencv-2nodes-worker-1
+  namespace: opencv-cluster-1
+spec:
+  template:
+    spec:
+      containers:
+      - name: opencv-2nodes-worker-1
+        image: bdaqa1.samsungsdsra.com:5000/opencv-2nodes-worker
+        env:
+        - name: REDIS_SERVER_NAME
+          valueFrom:
+            configMapKeyRef:
+              name: redis-service-configmap
+              key: REDIS_SERVER_NAME
+        - name: REDIS_SERVER_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: redis-service-configmap
+              key: REDIS_SERVER_PORT
+        - name: WORKER_ID
+          value: "worker1-task"
+        volumeMounts:
+        - mountPath: /input-images
+          name: input-image-volume
+        - mountPath: /proc-images
+          name: proc-image-volume
+      volumes:
+      - name: input-image-volume
+        hostPath:
+          path: /opencv-2nodes-cluster/input-images
+      - name: proc-image-volume
+        hostPath:
+          path: /opencv-2nodes-cluster/proc-images
+      nodeSelector:
+        cluster2-node: server1
+      restartPolicy: Never

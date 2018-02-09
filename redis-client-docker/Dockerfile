@@ -84,7 +84,12 @@ RUN pip --no-cache-dir install \
 
 RUN pip install redis
 
-RUN pip install pywebhdfs
+RUN pip install Pillow
+
+COPY redis-2nodes-worker.py /
+COPY start-redis-2nodes-worker.sh /
+
+WORKDIR /
 
 # Define default command.
-CMD ["python"]
+CMD ./start-redis-2nodes-worker.sh

@@ -5,9 +5,6 @@ import pprint
 
 import redis
 
-from pywebhdfs.webhdfs import PyWebHdfsClient
-
-
 _DEFAULT_REDIS_SERVER_NAME = "105.144.47.40"
 _DEFAULT_REDIS_SERVER_PORT = 32379
 
@@ -15,7 +12,7 @@ _DEFAULT_REDIS_DB = 0
 
 _DEFAULT_WORKER_ID = 0
 
-arg_parser = argparse.ArgumentParser("env_handler")
+arg_parser = argparse.ArgumentParser("init_worker-tasks")
 arg_parser.add_argument("rsvrname", default=_DEFAULT_REDIS_SERVER_NAME)
 arg_parser.add_argument("rsvrport", type=int, default=_DEFAULT_REDIS_SERVER_PORT)
 arg_parser.add_argument("rdbid", type=int, default=_DEFAULT_REDIS_DB)
