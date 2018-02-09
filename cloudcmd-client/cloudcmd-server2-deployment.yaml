@@ -1,46 +1,46 @@
 kind: Deployment
 apiVersion: extensions/v1beta1
 metadata:
-  name: cloudcmd-deployment
+  name: cloudcmd-on-server2
   namespace: opencv-cluster-1
 spec:
   replicas: 1
   selector:
     matchLabels:
-      component: cloudcmd-on-server1
+      component: cloudcmd-on-server2
   template:
     metadata:
       labels:
-        component: cloudcmd-on-server1
+        component: cloudcmd-on-server2
     spec:
       containers:
-      - name: cloudcmd-server1-container
+      - name: cloudcmd-server2-container
         image: coderaiser/cloudcmd
         ports:
         - containerPort: 8000
         volumeMounts:
-        - mountPath: /mnt/fs
-          name: image-volume
+        - mountPath: /mnt/pod-fs
+          name: pod-volume
       volumes:
-      - name: image-volume
+      - name: pod-volume
         hostPath:
-          path: /opencv-2nodes-cluster
+          path: /
       nodeSelector:
-        cluster2-node: server1
+        cluster2-node: server2
 
 ---
 
 kind: Service
 apiVersion: v1
 metadata:
-  name: cloudcmd-server1-service
+  name: cloudcmd-server2-service
   namespace: opencv-cluster-1
 spec:
   selector:
-    component: cloudcmd-on-server1
+    component: cloudcmd-on-server2
   ports:
-  - name: cloudcmd-server1-port
+  - name: cloudcmd-server2-port
     port: 8000
     targetPort: 8000
-    nodePort: 32400
+    nodePort: 32401
   type: NodePort
