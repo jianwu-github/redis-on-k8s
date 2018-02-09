@@ -8,7 +8,7 @@ spec:
     spec:
       containers:
       - name: opencv-2nodes-worker-2
-        image: bdaqa1.samsungsdsra.com:5000/opencv-2nodes-worker
+        image: opencv-2nodes-worker
         env:
         - name: REDIS_SERVER_NAME
           valueFrom:
