@@ -1,0 +1,39 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: opencv-3nodes-worker-3
+  namespace: opencv-cluster-1
+spec:
+  template:
+    spec:
+      containers:
+      - name: opencv-3nodes-worker-3
+        image: opencv-3nodes-worker
+        env:
+        - name: REDIS_SERVER_NAME
+          valueFrom:
+            configMapKeyRef:
+              name: redis-service-configmap
+              key: REDIS_SERVER_NAME
+        - name: REDIS_SERVER_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: redis-service-configmap
+              key: REDIS_SERVER_PORT
+        - name: WORKER_ID
+          value: "worker3-task"
+        volumeMounts:
+        - mountPath: /input-images
+          name: input-image-volume
+        - mountPath: /proc-images
+          name: proc-image-volume
+      volumes:
+      - name: input-image-volume
+        hostPath:
+          path: /opencv-3nodes-cluster/input-images
+      - name: proc-image-volume
+        hostPath:
+          path: /opencv-3nodes-cluster/proc-images
+      nodeSelector:
+        cluster3-node: server3
+      restartPolicy: Never

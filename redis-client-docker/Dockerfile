@@ -86,10 +86,19 @@ RUN pip install redis
 
 RUN pip install Pillow
 
+# For workers running on 2 nodes
 COPY redis-2nodes-worker.py /
 COPY start-redis-2nodes-worker.sh /
+
+# For workers running on 3 nodes
+COPY redis-3nodes-worker.py /
+COPY start-redis-3nodes-worker.sh /
 
 WORKDIR /
 
 # Define default command.
-CMD ./start-redis-2nodes-worker.sh
+# For workers running on 2 nodes
+# CMD ./start-redis-2nodes-worker.sh
+
+# For workers running on 3 nodes
+CMD ./start-redis-3nodes-worker.sh
