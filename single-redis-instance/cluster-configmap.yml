@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: opencv-cluster-1-cfg
+  namespace: opencv-cluster-1
+data:
+  REDIS-SERVICE-HOST: redis-service.opencv-cluser-1
+  REDIS-SERVICE-PORT: "6379"
