@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: redis-cfg
+  namespace: redis
+data:
+  REDIS-SERVICE-HOST: redis-service.redis
+  REDIS-SERVICE-PORT: "6379"
