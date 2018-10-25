@@ -1,0 +1,8 @@
+flask
+click
+redis
+rq
+rq-dashboard
+flask-rq2
+python-dotenv
+requests
